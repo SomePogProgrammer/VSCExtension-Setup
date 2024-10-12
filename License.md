@@ -10,7 +10,7 @@ Permission is hereby granted, free of charge, to use, copy, modify, merge, publi
 
 ### Conditions
 
-1. **Attribution**: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+1. **Attribution**: Attribution, to the repository and author, MUST be provided when distributing or advertising The Software. When privately used, meaning not being distributed, it is substaintial to maintain the author, repository link, and copyright within the `Main.ps1` file.
    
 2. **Non-Commercial Use**: This Software may not be used for commercial purposes. Commercial use is defined as any use that is intended for or directed toward commercial advantage or monetary compensation.
 
