@@ -98,7 +98,7 @@ If you want to know the default extensions you can do:
 *Still don't understand? Contact me at my [buisness email](mailto:quincy.m.dack@gmail.com). (Please ensure the email subject has this module name in it.)*
 
 # License
-This project is licensed under the MIT License. You are free to use and modify the code, but please do not claim it as your own. For any inquiries, feel free to contact the author.
+This project is licensed under an edited MIT License. You are free to use and modify the code (not sell it). For any inquiries, feel free to contact the author.
 ---------------
 
 For any additional information, issues, or feature requests, please open an issue on the GitHub repository.
