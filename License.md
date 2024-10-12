@@ -1,6 +1,6 @@
 # Edited MIT Open Source License
 
-## Version 1.0
+## Version 1.0.2
 
 Copyright (c) 2024 | Quincy.M.Dack | All Rights Reserved
 
