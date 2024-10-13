@@ -11,3 +11,26 @@ function Read-Installed {
 
     Write-Host "[INFO] Detected Visual Studio Code installation."
 }
+
+function Show-PATHPrompt {
+    param (
+        [string]$Message = "Would you also like to set up a PATH env variable, so you can execute the command doing: vsc-extensionsetup <command>"
+    )
+
+    while ($true) {
+        $response = Read-Host "$Message (Y/N)"
+        
+        switch ($response.ToLower()) {
+            'y' {
+                return $true
+            }
+            'n' {
+                return $false
+            }
+            default {
+                Write-Host "Invalid input. Please enter Y or N."
+            }
+        }
+    }
+}
+

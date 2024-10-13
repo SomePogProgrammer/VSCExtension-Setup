@@ -15,10 +15,7 @@ Import-Module .\Modules\Colors.psm1
 Import-Module .\Modules\Help.psm1
 Import-Module .\Modules\Extensions.psm1
 Import-Module .\Modules\Checks.psm1
-
-
 # --- // Main Execution \ ---
-
 
 # Define a hardcoded list of extensions (uncomment to use)
 $hardcodedExtensions = @(
@@ -76,31 +73,33 @@ $hardcodedExtensions = @(
     "zignd.html-css-class-completion"
 )
 
+function Show-PATH {
 
-function VSC_ExtensionSetup {
+    # Determine the directory of the executing script or executable
+    $exePath = if ([System.IO.Path]::GetFileName([System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName) -like 'vsc-extensionsetup.exe') {
+        # When run as an EXE, we get the path from the executable
+        [System.IO.Path]::GetDirectoryName([System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName)
+    }
+    else {
+        # When run as a script
+        $PSCommandPath -split "\\Main\.ps1"
+    }
+
+    Set-PathVariable $exePath
+    
+}
+
+function Start-InstallationProcess {
     param (
         [string]$extensionsFilePath
     )
+    Show-PATH
+    # Check for Visual Studio Code command
+    Read-Installed
 
-    # Parse command line arguments
-    if ($args.Count -gt 0) {
-        switch ($args[0]) {
-            '--help' {
-                Show-Help
-                return
-            }
-            '--list' {
-                Show-PreHardcodedExtensions
-                return
-            }
-            default {
-                $extensionsFilePath = $args[0]
-            }
-        }
-    }
-
-    # If no file path is provided or argument count is 0, fall back to the hardcoded list
-    if (-not $extensionsFilePath) {
+    # Check if provided file exists and load extensions
+    if ([string]::IsNullOrEmpty($extensionsFilePath)) {
+        # No file path provided, use hardcoded extensions
         $extensions = $hardcodedExtensions
     }
     else {
@@ -115,10 +114,49 @@ function VSC_ExtensionSetup {
     }
 
     Install-Extensions -extensions $extensions
-
     Write-Host "[INFO] Check the logs above for a detailed report."
     Write-Green "[DONE] Successfully finished."
 }
 
+function Set-PathVariable {
+    param (
+        [string]$pathToAdd
+    )
 
-VSC_ExtensionSetup
+    # Get current PATH
+    $currentPath = [System.Environment]::GetEnvironmentVariable("Path", "User")
+
+    # Check if the path already exists
+    if ($currentPath -notlike "*$pathToAdd*") {
+        # Add new path
+        if (Show-PATHPrompt) {
+            $newPath = "$currentPath;$pathToAdd"
+            [System.Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+            Write-Host "[INFO] Added $pathToAdd to PATH environment variable."
+        } else {
+            return
+        }
+    }
+    else {
+        Write-Host "[INFO] $pathToAdd is already in the PATH environment variable. Did not add."
+    }
+}
+
+# --- // Main Execution \ ---
+
+# Make sure arg indicators are more universal so -- > - 
+if ($args[0] -like '--*') {
+    # Convert to PowerShell style
+    $args[0] = $args[0] -replace '^--', '-'
+}
+
+if ($args.Count -gt 0) {
+    switch ($args[0]) {
+        '-help' { Show-Help }
+        '-list' { Show-PreHardcodedExtensions }
+        default { Start-InstallationProcess -extensionsFilePath $args[0] }  # Pass the first arg as parameter
+    }
+}
+else {
+    Start-InstallationProcess -extensionsFilePath $null  # Pass null to indicate no file
+}

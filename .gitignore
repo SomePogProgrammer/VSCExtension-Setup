@@ -3,3 +3,6 @@ Production
 
 # Manifest
 Manifest.psd1
+
+# Executable
+vsc-extensionsetup.exe
