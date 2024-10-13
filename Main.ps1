@@ -77,18 +77,30 @@ $hardcodedExtensions = @(
 )
 
 
-function Start-InstallationProcess {
+function VSC_ExtensionSetup {
     param (
         [string]$extensionsFilePath
     )
-    # Check for visual studio code command
-    Read-Installed
 
-    # Check if provided file exists and load extensions
-    $extensionsFilePath = $args[0]
+    # Parse command line arguments
+    if ($args.Count -gt 0) {
+        switch ($args[0]) {
+            '--help' {
+                Show-Help
+                return
+            }
+            '--list' {
+                Show-PreHardcodedExtensions
+                return
+            }
+            default {
+                $extensionsFilePath = $args[0]
+            }
+        }
+    }
 
-    if ([string]::IsNullOrEmpty($extensionsFilePath)) {
-        # No file path provided, use hardcoded extensions
+    # If no file path is provided or argument count is 0, fall back to the hardcoded list
+    if (-not $extensionsFilePath) {
         $extensions = $hardcodedExtensions
     }
     else {
@@ -108,14 +120,5 @@ function Start-InstallationProcess {
     Write-Green "[DONE] Successfully finished."
 }
 
-# Parse command line arguments
-if ($args.Count -gt 0) {
-    switch ($args[0]) {
-        '--help' { Show-Help }
-        '--list' { Show-PreHardcodedExtensions }
-        default { Start-InstallationProcess $args[0] }
-    }
-} else {
-    Start-InstallationProcess
-}
 
+VSC_ExtensionSetup
