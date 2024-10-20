@@ -1,8 +1,10 @@
 # Prod
 Production
 
-# Manifest
-Manifest.psd1
+# Publish/Update
+bin/PublishModule.ps1
+# VSC-ExtensionSetup
+./VSC-ExtensionSetup
 
 # Executable
 vsc-extensionsetup.exe
