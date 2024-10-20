@@ -38,8 +38,8 @@ VSC-ExtensionSetup is a PowerShell script designed to bulk install Visual Studio
 To run the script, you can use the following commands:
 
 ```powershell
-.\VSC-ExtensionSetup.ps1                       # Uses suggested extensions
-.\VSC-ExtensionSetup.ps1 <ExtensionsFilePath>  # Uses extensions from the specified file (overrides suggestion/default)
+VSC-ExtensionSetup                       # Uses suggested extensions
+VSC-ExtensionSetup <ExtensionsFilePath>  # Uses extensions from the specified file (overrides suggestion/default)
     ---------------------------
      Format is: 
         [author.extensionName]

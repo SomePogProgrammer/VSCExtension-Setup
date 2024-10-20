@@ -1,6 +1,6 @@
 @{
     # Version of the module
-    ModuleVersion = '1.0.2'
+    ModuleVersion = '1.0.3'
 
     # Root module file
     RootModule = 'VSC-ExtensionSetup.ps1'
@@ -60,5 +60,6 @@
         }
     }
 }
+
 
 
