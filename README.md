@@ -99,6 +99,7 @@ If you want to know the default extensions you can do:
 
 # License
 This project is licensed under an edited MIT License. You are free to use and modify the code (not sell it). For any inquiries, feel free to contact the author.
+(Refer to the project's liscense for full terms)
 ---------------
 
 For any additional information, issues, or feature requests, please open an issue on the GitHub repository.
